@@ -8,15 +8,63 @@ var board = new five.Board();
 //   this.repl.inject({servo:servo});
 //   servo.sweep();
 // });
-
 board.on("ready", function() {
 
-  // Create a standard `led` component instance
-  var led = new five.Led(13);
+  var matrix = new five.Led.Matrix({
+    pins: {
+      data: 2,
+      clock: 3,
+      cs: 4
+    }, 
+    devices: 1
+  });
 
-  // "blink" the led in 500ms
-  // on-off phase periods
-  led.blink(1500);
+  var heart = [
+    "01100110",
+    "10011001",
+    "10000001",
+    "10000001",
+    "01000010",
+    "00100100",
+    "00011000",
+    "00000000"
+  ];
+
+  var smile = [
+    "00111100",
+    "01000010",
+    "10100101",
+    "10000001",
+    "10100101",
+    "10011001",
+    "01000010",
+    "00111100"
+  ];
+
+  var noSmile = [
+    "11000011",
+    "10111101",
+    "01011010",
+    "01111110",
+    "01011010",
+    "01100110",
+    "10111101",
+    "11000011"
+  ];
+
+  // matrix.draw(smile);
+  // matrix.
+  var smileOn = true;
+
+  setInterval(function(){
+    if(smileOn){
+      matrix.draw(smile);
+      smileOn = !smileOn;
+    }else{
+      matrix.draw(noSmile);
+      smileOn = !smileOn;
+    }
+  }, 500);
 });
 
 // board.on("ready", function(){
